@@ -13,10 +13,16 @@ namespace LeSakk
         public static bool CheckMate { get; set; } //true igen, false nem
         public static int[] selectedIndex { get; set; } //0=y, 1=x
         //játék mező 
-
-        public GeneralData()
+        public static int[,] Field = new int[8, 8]
         {
-                    
-        }
+            { 2, 3, 4, 5, 6, 4, 3, 2 },
+            { 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 1, 1, 1, 1, 1, 1, 1, 1 },
+            { 2, 3, 4, 5, 6, 4, 3, 2 }
+        };
     }
 }

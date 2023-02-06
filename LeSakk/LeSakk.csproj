@@ -47,7 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Babu.cs" />
-    <Compile Include="Babuk.cs" />
+    <Compile Include="Babuk\Bastya.cs" />
+    <Compile Include="Babuk\Futo.cs" />
+    <Compile Include="Babuk\Gyalogos.cs" />
+    <Compile Include="Babuk\Huszar.cs" />
+    <Compile Include="Babuk\Karoly.cs" />
+    <Compile Include="Babuk\Kiralyno.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

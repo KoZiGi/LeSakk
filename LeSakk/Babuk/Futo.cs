@@ -4,17 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeSakk
+namespace LeSakk.Babuk
 {
-    class Babu
+    class Futo
     {
-        public bool isWhite;
-
-        public Babu(int isWhite, int type)
-        {
-
-        }
-
-
     }
 }
