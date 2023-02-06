@@ -21,3 +21,5 @@
         - Winhez valami
 # Grafika
 Made by Zsolti®®®®®
+
+1=paraszt
