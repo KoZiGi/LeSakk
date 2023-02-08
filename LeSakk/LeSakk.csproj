@@ -61,7 +61,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FunctionsMethods.cs" />
-    <Compile Include="GeneralData.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

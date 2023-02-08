@@ -18,8 +18,8 @@ namespace LeSakk
                     form.Controls.Add(GenPbx(i,g));
                 }
             }
-            form.Width = GeneralData.Field.GetLength(0)*50 + 15;
-            form.Height = GeneralData.Field.GetLength(0) * 50 + 36;
+            form.Width = Data.Field.GetLength(0)*50 + 15;
+            form.Height = Data.Field.GetLength(0) * 50 + 36;
         }
         private static PictureBox GenPbx(int i, int g)
         {
@@ -47,7 +47,7 @@ namespace LeSakk
         {
             //világos: 255 192 130 | sötét: 128 64 0
             int y = Convert.ToInt32(name[1].ToString()), x = Convert.ToInt32(name[2].ToString());
-            Babu piece = GeneralData.Field[y, x];
+            Babu piece = Data.Field[y, x];
             return piece.Type != 0 ? ImageFromProperties($"{(piece.isWhite ? "T" : "F")}{(CheckParity(y, x) ? "T" : "F")}{piece.Type}") : null;
         }
         private static Image ImageFromProperties(string name)

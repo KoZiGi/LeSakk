@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LeSakk
 {
 
-    class GeneralData
+    class Data
     {
         public static bool isWhite = true;
         public static bool inCheck = false;

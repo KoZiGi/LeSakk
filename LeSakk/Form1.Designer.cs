@@ -38,7 +38,6 @@ namespace LeSakk
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.ResumeLayout(false);
 
         }
