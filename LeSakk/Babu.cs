@@ -9,12 +9,11 @@ namespace LeSakk
     class Babu
     {
         public bool isWhite;
-
-        public Babu(int isWhite, int type)
+        public int Type;
+        public Babu(bool white, int type)
         {
-
+            isWhite = white;
+            Type = type;
         }
-
-
     }
 }

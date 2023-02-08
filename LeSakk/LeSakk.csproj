@@ -64,6 +64,9 @@
     <Compile Include="GeneralData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -72,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -85,6 +89,78 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FF1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FF2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FF3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FF4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FF5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FF6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FT1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FT2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FT3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FT4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FT6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FT7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TF1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TF2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TF3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TF4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TF5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TF6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TT1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TT2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TT3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TT4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TT5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TT6.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

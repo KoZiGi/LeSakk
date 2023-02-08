@@ -15,6 +15,13 @@ namespace LeSakk
         public Form1()
         {
             InitializeComponent();
+            Display.GenDisplay(this);
+            Display.UpdateDisplay(this.Controls);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            Text = $"{Width};{Height}";
         }
     }
 }

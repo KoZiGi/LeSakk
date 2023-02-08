@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 
 namespace LeSakk
 {
+
     class GeneralData
     {
-        public static bool isTurn { get; set; } //true fehér, false fekete
-        public static bool inCheck { get; set; } //true igen, false nem
-        public static bool CheckMate { get; set; } //true igen, false nem
-        public static int[] selectedIndex { get; set; } //0=y, 1=x
+        public static bool isWhite = true;
+        public static bool inCheck = false;
+        public static bool CheckMate = false;
+        public static int[] selectedIndex = new int[] { -1, -1 };
         //játék mező 
-        public static int[,] Field = new int[8, 8]
+        public static Babu[,] Field = new Babu[8, 8]
         {
-            { 2, 3, 4, 5, 6, 4, 3, 2 },
-            { 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 2, 3, 4, 5, 6, 4, 3, 2 }
+            { new Babu(false, 2), new Babu(false, 3), new Babu(false, 4), new Babu(false, 5), new Babu(false, 6), new Babu(false, 4), new Babu(false, 3), new Babu(false, 2) },
+            { new Babu(false, 1), new Babu(false, 1), new Babu(false, 1), new Babu(false, 1), new Babu(false, 1), new Babu(false, 1), new Babu(false, 1), new Babu(false, 1) },
+            { new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0) },
+            { new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0) },
+            { new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0) },
+            { new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0), new Babu(false, 0) },
+            { new Babu(true, 1), new Babu(true, 1), new Babu(true, 1), new Babu(true, 1), new Babu(true, 1), new Babu(true, 1), new Babu(true, 1), new Babu(true, 1) },
+            { new Babu(true, 2), new Babu(true, 3), new Babu(true, 4), new Babu(true, 5), new Babu(true, 6), new Babu(true, 4), new Babu(true, 3), new Babu(true, 2) }
         };
     }
 }
