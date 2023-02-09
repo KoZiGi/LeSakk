@@ -20,6 +20,8 @@ namespace LeSakk
             }
             form.Width = Data.Field.GetLength(0)*50 + 15;
             form.Height = Data.Field.GetLength(0) * 50 + 36;
+            form.MaximumSize = new Size(Data.Field.GetLength(0) * 50 + 15, Data.Field.GetLength(0) * 50 + 36);
+            form.MinimumSize= new Size(Data.Field.GetLength(0) * 50 + 15, Data.Field.GetLength(0) * 50 + 36);
         }
         private static PictureBox GenPbx(int i, int g)
         {
