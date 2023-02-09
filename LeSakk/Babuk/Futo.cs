@@ -8,7 +8,7 @@ namespace LeSakk.Babuk
 {
     class Futo
     {
-        public static List<int[]> AllowedMoves(int y, int x, bool isWhite)
+        public static List<int[]> AllowedMoves(int y, int x)
         {
             List<int[]> moose = new List<int[]>();
             bool diagonaldownright = false, diagonaldownleft = false, diagonalupright = false, diagonalupleft = false;
