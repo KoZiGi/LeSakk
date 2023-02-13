@@ -28,9 +28,11 @@ namespace LeSakk.Babuk
                 }
                 if (Data.Field[i, x].Type != 0)
                 {
+                    if (y == i) continue;
                     if (Data.Field[i, x].isWhite && Data.isWhite)
                     {
                         moves.Add(new int[] { up ? i - 1 : i + 1, x });
+                        break;
                     }
                     else
                     {
@@ -38,7 +40,7 @@ namespace LeSakk.Babuk
                         break;
                     }
                 }
-                if (Data.Field[i, x].Type == 0 && i == 0)
+                if (Data.Field[i, x].Type == 0 && i == (up ? 0 : 7))
                 {
                     moves.Add(new int[] { i, x });
                     break;
@@ -57,9 +59,11 @@ namespace LeSakk.Babuk
                 }
                 if (Data.Field[y, i].Type != 0)
                 {
+                    if (x == i) continue;
                     if (Data.Field[y, i].isWhite && Data.isWhite)
                     {
-                        moose.Add(new int[] { y, left ? i-1 : i+1 });
+                        moose.Add(new int[] { y, left ? i+1 : i-1 });
+                        break;
                     }
                     else
                     {
@@ -67,13 +71,27 @@ namespace LeSakk.Babuk
                         break;
                     }
                 }
-                if (Data.Field[y, i].Type == 0 && i == 0)
+                if (Data.Field[y, i].Type == 0 && i == (left ? 0 : 8))
                 {
                     moose.Add(new int[] { y, i });
                     break;
                 }
             }
             return moose;
+        }
+        public static bool CheckValid(int toY, int toX, List<int[]> coordinates)
+        {
+            if (toY == Data.selectedIndex[0])
+            {
+                List<int> Xs = coordinates.Where(e => e[0] == toY).Select(g=>g[1]).ToList();
+                if (toX <= Xs.Max() && toX >= Xs.Min()) return true;
+            }
+            if (toX == Data.selectedIndex[1])
+            {
+                List<int> Ys = coordinates.Where(e => e[1] == toX).Select(g => g[0]).ToList();
+                if (toY <= Ys.Max() && toY >= Ys.Min()) return true;
+            }
+            return false;
         }
     }
 }

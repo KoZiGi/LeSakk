@@ -32,7 +32,15 @@ namespace LeSakk
             pbx.Left = g * 50;
             pbx.BackColor = ColorDecider(i, g);
             pbx.Name = $"_{i}{g}"; //x==g y==i, azaz az első az Y koordináta!
+            pbx.Click += delegate
+            {
+                FunctionsMethods.gamelogic(pbx);
+            };
             return pbx;
+        }
+        public static void updateStatus()
+        {
+            Data.GameForm.Text = $"{(Data.isWhite ? "Fehér" : "Fekete")} - {(Data.selectedIndex[0]!=-1 ? "Lép" : "Választ")}";
         }
         public static void UpdateDisplay(Control.ControlCollection controls)
         {

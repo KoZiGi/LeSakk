@@ -13,6 +13,7 @@ namespace LeSakk
         public static bool inCheck = false;
         public static bool CheckMate = false;
         public static int[] selectedIndex = new int[] { -1, -1 };
+        public static Form1 GameForm;
         //játék mező 
         public static Babu[,] Field = new Babu[8, 8]
         {

@@ -14,7 +14,9 @@ namespace LeSakk
     {
         public Form1()
         {
+            Data.GameForm = this;
             InitializeComponent();
+            Display.updateStatus();
             Display.GenDisplay(this);
             Display.UpdateDisplay(this.Controls);
         }

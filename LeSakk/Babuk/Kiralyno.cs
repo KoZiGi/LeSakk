@@ -11,8 +11,8 @@ namespace LeSakk.Babuk
         public static List<int[]> AllowedMoves(int y, int x)
         {
             List<int[]> moose = new List<int[]>();
-            moose.AddRange(Babuk.Bastya.AllowedMoves(y,x));
-            moose.AddRange(Babuk.Futo.AllowedMoves(y,x));
+            moose.AddRange(Bastya.AllowedMoves(y,x));
+            moose.AddRange(Futo.AllowedMoves(y,x));
             return moose;
         }
     }
