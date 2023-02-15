@@ -29,6 +29,8 @@ namespace LeSakk
                     return Babuk.Futo.AllowedMoves(y, x);
                 case 5:
                     return Babuk.Kiralyno.AllowedMoves(y, x);
+                case 6:
+                    return Babuk.Karoly.AllowedMoves(y, x);
                 default: return new List<int[]>();
             }
         }

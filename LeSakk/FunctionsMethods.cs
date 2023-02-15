@@ -81,6 +81,8 @@ namespace LeSakk
                     return false;
                 case 2:
                     return Babuk.Bastya.CheckValid(toY, toX, Babuk.Bastya.AllowedMoves(Data.selectedIndex[0], Data.selectedIndex[1]));
+                case 6:
+                    return Babuk.Karoly.CheckValid(toY, toX);
             }
             return false;
         }
