@@ -112,11 +112,11 @@ namespace LeSakk.Babuk
         }
         public static bool CheckValid(int toY, int toX)
         {
-            int dirX = Data.selectedIndex[1] < toX ? -1 : 1;
-            int dirY = Data.selectedIndex[0] < toY ? -1 : 1;
+            int dirX = Data.selectedIndex[1] < toX ? 1 : -1;
+            int dirY = Data.selectedIndex[0] < toY ? 1 : -1;
             for (int i = 0; i < 8; i++)
             {
-                if (toX == Data.selectedIndex[1] + dirX && dirY == Data.selectedIndex[0] + dirY)
+                if (toX == Data.selectedIndex[1] + dirX && toY == Data.selectedIndex[0] + dirY)
                 {
                     if (Data.Field[toY, toX].Type != 0 && Data.isWhite != Data.Field[toY, toX].isWhite) return true;
                     else if (Data.Field[toY, toX].Type == 0) return true;
@@ -124,11 +124,8 @@ namespace LeSakk.Babuk
                 }
                 else
                 {
-                    if (Data.selectedIndex[1]+dirX == 7 || Data.selectedIndex[1] + dirX == 0)
-                    {
-                    }
-                    dirX += Data.selectedIndex[1] < toX ? -1 : 1;
-                    dirY += Data.selectedIndex[0] < toY ? -1 : 1;
+                    dirX += Data.selectedIndex[1] < toX ? 1 : -1;
+                    dirY += Data.selectedIndex[0] < toY ? 1 : -1;
                 }
             }
             return false;
