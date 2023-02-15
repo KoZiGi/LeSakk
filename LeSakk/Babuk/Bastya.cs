@@ -29,9 +29,9 @@ namespace LeSakk.Babuk
                 if (Data.Field[i, x].Type != 0)
                 {
                     if (y == i) continue;
-                    if (Data.Field[i, x].isWhite && Data.isWhite)
+                    if ((Data.Field[i, x].isWhite && Data.isWhite) || (!Data.Field[i,x].isWhite && !Data.isWhite))
                     {
-                        moves.Add(new int[] { up ? i - 1 : i + 1, x });
+                        moves.Add(new int[] { up ? i + 1 : i - 1, x });
                         break;
                     }
                     else
@@ -60,7 +60,7 @@ namespace LeSakk.Babuk
                 if (Data.Field[y, i].Type != 0)
                 {
                     if (x == i) continue;
-                    if (Data.Field[y, i].isWhite && Data.isWhite)
+                    if ((Data.Field[y, i].isWhite && Data.isWhite) || (!Data.Field[y, i].isWhite && !Data.isWhite))
                     {
                         moose.Add(new int[] { y, left ? i+1 : i-1 });
                         break;
@@ -71,7 +71,7 @@ namespace LeSakk.Babuk
                         break;
                     }
                 }
-                if (Data.Field[y, i].Type == 0 && i == (left ? 0 : 8))
+                if (Data.Field[y, i].Type == 0 && i == (left ? 0 : 7))
                 {
                     moose.Add(new int[] { y, i });
                     break;
@@ -79,17 +79,47 @@ namespace LeSakk.Babuk
             }
             return moose;
         }
-        public static bool CheckValid(int toY, int toX, List<int[]> coordinates)
+        public static bool CheckValid(int toY, int toX)
         {
-            if (toY == Data.selectedIndex[0])
+            if (Data.selectedIndex[1] == toX)
             {
-                List<int> Xs = coordinates.Where(e => e[0] == toY).Select(g=>g[1]).ToList();
-                if (toX <= Xs.Max() && toX >= Xs.Min()) return true;
+                for (int i = Data.selectedIndex[0]; Data.selectedIndex[0] >= toY ? i >= toY : i <= toY; i += Data.selectedIndex[0] > toY ? -1 : 1)
+                {
+                    if (i==Data.selectedIndex[0]) continue;
+                    if (Data.Field[i, Data.selectedIndex[1]].Type!=0)
+                    {
+                        if (Data.Field[i, Data.selectedIndex[1]].isWhite != Data.isWhite)
+                        {
+                            if (i == toY && toX == Data.selectedIndex[1]) return true;
+                            else return false;
+                        }
+                        else return false;
+                    }
+                    else
+                    {
+                        if (i == toY && toX == Data.selectedIndex[1]) return true;
+                    }
+                }
             }
-            if (toX == Data.selectedIndex[1])
+            if (Data.selectedIndex[0] == toY)
             {
-                List<int> Ys = coordinates.Where(e => e[1] == toX).Select(g => g[0]).ToList();
-                if (toY <= Ys.Max() && toY >= Ys.Min()) return true;
+                for (int i = Data.selectedIndex[1]; Data.selectedIndex[1]>=toX ? i >= toX : i <= toX; i+= Data.selectedIndex[1]>=toX ? -1 : 1)
+                {
+                    if (i == Data.selectedIndex[1]) continue;
+                    if (Data.Field[Data.selectedIndex[0], i].Type != 0)
+                    {
+                        if (Data.Field[Data.selectedIndex[0], i].isWhite != Data.isWhite)
+                        {
+                            if (i == toX && toY == Data.selectedIndex[0]) return true;
+                            else return false;
+                        }
+                        else return false;
+                    }
+                    else
+                    {
+                        if (i == toX && toY == Data.selectedIndex[0]) return true;
+                    }
+                }
             }
             return false;
         }
