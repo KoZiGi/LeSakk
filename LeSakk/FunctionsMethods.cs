@@ -80,7 +80,7 @@ namespace LeSakk
                 case 5:
                     return false;
                 case 2:
-                    return Babuk.Bastya.CheckValid(toY, toX, Babuk.Bastya.AllowedMoves(Data.selectedIndex[0], Data.selectedIndex[1]));
+                    return Babuk.Bastya.CheckValid(toY, toX);
             }
             return false;
         }
