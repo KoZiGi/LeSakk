@@ -14,11 +14,7 @@ namespace LeSakk
             if (Data.selectedIndex[0] != -1)
             {
                 if (GetCoords(pbx.Name)[0] == Data.selectedIndex[0] && GetCoords(pbx.Name)[1] == Data.selectedIndex[1]) ResetSelect();
-                else
-                {
-                    DoMove(pbx.Name);
-                    
-                }
+                else DoMove(pbx.Name);
                 Display.updateStatus();
             }
             else
