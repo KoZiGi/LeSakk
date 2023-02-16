@@ -15,7 +15,10 @@ namespace LeSakk
             {
                 if (GetCoords(pbx.Name)[0] == Data.selectedIndex[0] && GetCoords(pbx.Name)[1] == Data.selectedIndex[1]) ResetSelect();
                 else
+                {
                     DoMove(pbx.Name);
+                    
+                }
                 Display.updateStatus();
             }
             else
@@ -50,8 +53,9 @@ namespace LeSakk
                     {
                         Mierda(x, y);
                         SwapPieces(x, y);
-                        Display.UpdateDisplay(Data.GameForm.Controls);
+                        Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
                         Swap();
+                        Display.UpdateDisplay(Data.GameForm.Controls);
                     }
                     else ResetSelect();
                }                
@@ -78,7 +82,7 @@ namespace LeSakk
                 case 4:
                     return Babuk.Futo.CheckValid(toY, toX);
                 case 5:
-                    return false;
+                    return Babuk.Futo.CheckValid(toY, toX) || Babuk.Bastya.CheckValid(toY, toX);
                 case 2:
                     return Babuk.Bastya.CheckValid(toY, toX);
                 case 6:
@@ -105,10 +109,7 @@ namespace LeSakk
                     return CheckValidMv(x, y);
             }
         }
-        private static void Swap()
-        {
-            Data.isWhite = !Data.isWhite;
-        }
+        private static void Swap() => Data.isWhite = !Data.isWhite;
         public static void PesantToQween()
         {
             for (int i = 0; i < 8; i++)
@@ -123,5 +124,104 @@ namespace LeSakk
         {
             new PieceChoser(y,x).Show();
         }
+        //ALERTA
+        private static int[] GetKing()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int g = 0; g < 8; g++)
+                {
+                    if (Data.Field[i, g].Type == 6 && Data.Field[i, g].isWhite != Data.isWhite) return new int[] { i, g };
+                }
+            }
+            return new int[] { -1, -1 };
+        }
+        private static bool CheckHonse(int kingX, int kingY)
+        {
+            if (kingX + 1 < 8)
+            {
+                if (kingY + 2 < 8 && Data.Field[kingY+2, kingX+1].Type==3 && Data.Field[kingY+2, kingX+1].isWhite == Data.isWhite) return true;
+                if (kingY - 2 > 0 && Data.Field[kingY-2, kingX+1].Type==3 && Data.Field[kingY-2, kingX+1].isWhite == Data.isWhite) return true;
+            }
+            if (kingX-1 > -1)
+            {
+                if (kingY + 2 < 8 && Data.Field[kingY+2, kingX-1].Type==3 && Data.Field[kingY+2, kingX-1].isWhite == Data.isWhite) return true;
+                if (kingY - 2 > 0 && Data.Field[kingY-2, kingX-1].Type==3 && Data.Field[kingY-2, kingX-1].isWhite == Data.isWhite) return true;
+            }
+            if (kingX - 2 > -1)
+            {
+                if (kingY + 1 < 8 && Data.Field[kingY + 1, kingX - 2].Type == 3 && Data.Field[kingY + 1, kingX - 2].isWhite == Data.isWhite) return true;
+                if (kingY - 1 > 8 && Data.Field[kingY - 1, kingX - 2].Type == 3 && Data.Field[kingY - 1, kingX - 2].isWhite == Data.isWhite) return true;
+            }
+            if (kingX + 2 < 8)
+            {
+                if (kingY + 1 < 8 && Data.Field[kingY + 1, kingX + 2].Type == 3 && Data.Field[kingY + 1, kingX + 2].isWhite == Data.isWhite) return true;
+                if (kingY - 1 > 8 && Data.Field[kingY - 1, kingX + 2].Type == 3 && Data.Field[kingY - 1, kingX + 2].isWhite == Data.isWhite) return true;
+            }
+            return false;
+        }
+        private static bool CheckRook(int kingX, int kingY)
+        {
+            for (int i = kingX; i < 8; i++)
+            {
+                if (Data.Field[kingY, i].Type == 2 && Data.Field[kingY, i].isWhite == Data.isWhite) return true;
+                else if (Data.Field[kingY, i].Type != 0 && i != kingX) break;
+            }
+            for (int i = kingX; i > -1; i--)
+            {
+                if (Data.Field[kingY, i].Type == 2 && Data.Field[kingY, i].isWhite == Data.isWhite) return true;
+                else if (Data.Field[kingY, i].Type != 0 && i != kingX) break;
+            }
+            for (int i = kingY; i < 8; i++)
+            {
+                if ((Data.Field[i, kingX].Type == 2 || Data.Field[i, kingX].Type == 5) && Data.Field[i, kingX].isWhite == Data.isWhite) return true;
+                else if (Data.Field[i, kingX].Type != 0 && i != kingY) break;
+            }
+            for (int i = kingY; i > 8; i--)
+            {
+                if ((Data.Field[i, kingX].Type == 2  || Data.Field[i,kingX].Type==5) && Data.Field[i, kingX].isWhite == Data.isWhite) return true;
+                else if (Data.Field[i, kingX].Type != 0 && i != kingY) break;
+            }
+            return false;
+        }
+        private static bool CheckBishop(int kingX, int kingY)
+        {
+            for (int i = 1; kingX+i < 8 && kingY + i < 8; i++)
+            {
+                if ((Data.Field[kingY + i, kingX + i].Type == 4 || Data.Field[kingY + i, kingX + i].Type == 5) && Data.Field[kingY + i, kingX + i].isWhite == Data.isWhite) return true;
+                else if (Data.Field[kingY + i, kingX + i].Type != 0) break; 
+            }
+            for (int i = 1; kingX+i < 8 && kingY - i > -1; i++)
+            {
+                if ((Data.Field[kingY - i, kingX + i].Type == 4 || Data.Field[kingY - i, kingX + i].Type == 5) && Data.Field[kingY - i, kingX + i].isWhite == Data.isWhite) return true;
+                else if (Data.Field[kingY - i, kingX + i].Type != 0) break; 
+            }
+            for (int i = 1; kingX-i > -1 && kingY - i > -1; i++)
+            {
+                if ((Data.Field[kingY - i, kingX - i].Type == 4 || Data.Field[kingY - i, kingX - i].Type == 5) && Data.Field[kingY - i, kingX - i].isWhite == Data.isWhite) return true;
+                else if (Data.Field[kingY - i, kingX - i].Type != 0) break; 
+            }
+            for (int i = 1; kingX-i > -1 && kingY + i < 8; i++)
+            {
+                if ((Data.Field[kingY + i, kingX - i].Type == 4 || Data.Field[kingY + i, kingX - i].Type == 5) && Data.Field[kingY + i, kingX - i].isWhite == Data.isWhite) return true;
+                else if (Data.Field[kingY + i, kingX - i].Type != 0) break; 
+            }
+            return false;
+        }
+        private static bool CheckPesant(int kingX, int kingY)
+        {
+            if (Data.isWhite)
+            {
+                if (kingX + 1 < 8 && kingY + 1 < 8 && Data.Field[kingY + 1, kingX + 1].Type == 1 && Data.Field[kingY + 1, kingX + 1].isWhite == Data.isWhite) return true; 
+                if (kingX - 1 > -1 && kingY + 1 < 8 && Data.Field[kingY + 1, kingX - 1].Type == 1 && Data.Field[kingY + 1, kingX - 1].isWhite == Data.isWhite) return true; 
+            }
+            else
+            {
+                if (kingX + 1 < 8 && kingY - 1 > -1 && Data.Field[kingY - 1, kingX + 1].Type == 1 && Data.Field[kingY - 1, kingX + 1].isWhite == Data.isWhite) return true; 
+                if (kingX - 1 > -1 && kingY - 1 > -1 && Data.Field[kingY - 1, kingX - 1].Type == 1 && Data.Field[kingY - 1, kingX - 1].isWhite == Data.isWhite) return true; 
+            }
+            return false;
+        }
+        public static bool CzechCheck(int kingX, int kingY) => CheckRook(kingX, kingY) || CheckBishop(kingX, kingY) || CheckHonse(kingX, kingY) || CheckPesant(kingX, kingY);
     }
 }
