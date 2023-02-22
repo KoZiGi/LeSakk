@@ -53,6 +53,7 @@
     <Compile Include="Babuk\Huszar.cs" />
     <Compile Include="Babuk\Karoly.cs" />
     <Compile Include="Babuk\Kiralyno.cs" />
+    <Compile Include="CheckMateStuff.cs" />
     <Compile Include="Display.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

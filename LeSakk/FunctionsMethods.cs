@@ -45,15 +45,31 @@ namespace LeSakk
             {
                if (Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].GetValidMoves(Data.selectedIndex[1], Data.selectedIndex[0]).Count>0)
                {
-                    if (CheckValidMove(x, y))
+                    if (Data.inCheck)
                     {
-                        Mierda(x, y);
-                        SwapPieces(x, y);
-                        Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
-                        Swap();
-                        Display.UpdateDisplay(Data.GameForm.Controls);
+                        if (!CheckMateStuff.CheckTempMove(y, x))
+                        {
+                            Data.inCheck = false;
+                            Mierda(x, y);
+                            SwapPieces(x, y);
+                            CheckPesants();
+                            Swap();
+                            Display.UpdateDisplay(Data.GameForm.Controls);
+                        }
                     }
-                    else ResetSelect();
+                    else
+                    {
+                        if (CheckValidMove(x, y))
+                        {
+                            Mierda(x, y);
+                            SwapPieces(x, y);
+                            CheckPesants();
+                            Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
+                            Swap();
+                            Display.UpdateDisplay(Data.GameForm.Controls);
+                        }
+                        else ResetSelect();
+                    }
                }                
             }
             else return;
@@ -94,7 +110,7 @@ namespace LeSakk
             }
             return false;
         }
-        private static bool CheckValidMove(int x, int y)
+        public static bool CheckValidMove(int x, int y)
         {
             switch (Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].Type)
             {
@@ -105,7 +121,21 @@ namespace LeSakk
                     return CheckValidMv(x, y);
             }
         }
-        private static void Swap() => Data.isWhite = !Data.isWhite;
+        public static void Swap() => Data.isWhite = !Data.isWhite;
+        private static void CheckPesants()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                if (Data.Field[0, i].Type==1)
+                {
+                    AlterPiece(0, i);
+                }
+                if (Data.Field[7, i].Type == 1)
+                {
+                    AlterPiece(7, i);
+                }
+            }
+        }
         public static void PesantToQween()
         {
             for (int i = 0; i < 8; i++)
@@ -120,7 +150,7 @@ namespace LeSakk
         {
             new PieceChoser(y,x).Show();
         }
-        //ALERTA
+        public static void SwapPeasantTo(int x, int y, int type) => Data.Field[y, x].Type = type;
         private static int[] GetKing()
         {
             for (int i = 0; i < 8; i++)
