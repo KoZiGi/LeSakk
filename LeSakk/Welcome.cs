@@ -16,5 +16,16 @@ namespace LeSakk
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new Form1().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Data.Field = Data.ReallyBadField();
+            new Form1().Show();
+        }
     }
 }

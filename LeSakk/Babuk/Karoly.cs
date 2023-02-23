@@ -11,14 +11,14 @@ namespace LeSakk.Babuk
         public static List<int[]> AllowedMoves(int y, int x)
         {
             List<int[]> moose = new List<int[]>();
-            if (x + 1 != 8) moose.Add(new int[] {y, x + 1});
-            if (x - 1 != -1) moose.Add(new int[] { y, x - 1 });
-            if (y - 1 != -1) moose.Add(new int[] { y - 1, x });
-            if (y + 1 != 8) moose.Add(new int[] { y + 1, x });
-            if (x - 1 != -1 && y - 1 != -1) moose.Add(new int[] { y - 1, x - 1 });
-            if (x - 1 != -1 && y + 1 != 8) moose.Add(new int[] { y + 1, x - 1 });
-            if (x + 1 != 8 && y - 1 != -1) moose.Add(new int[] { y - 1, x + 1 });
-            if (x + 1 != 8 && y + 1 != 8) moose.Add(new int[] { y + 1, x + 1 });
+            if (x + 1 != 8 && (Data.Field[y, x + 1].isWhite == Data.isWhite || Data.Field[y, x + 1].Type == 0)) moose.Add(new int[] {y, x + 1});
+            if (x - 1 != -1 && (Data.Field[y, x - 1].isWhite == Data.isWhite || Data.Field[y, x - 1].Type == 0)) moose.Add(new int[] { y, x - 1 });
+            if (y - 1 != -1 && (Data.Field[y - 1, x].isWhite == Data.isWhite || Data.Field[y - 1, x].Type == 0)) moose.Add(new int[] { y - 1, x });
+            if (y + 1 != 8 && (Data.Field[y + 1, x].isWhite == Data.isWhite || Data.Field[y + 1, x].Type == 0)) moose.Add(new int[] { y + 1, x });
+            if (x - 1 != -1 && y - 1 != -1 && (Data.Field[y - 1, x - 1].isWhite == Data.isWhite || Data.Field[y - 1, x - 1].Type == 0)) moose.Add(new int[] { y - 1, x - 1 });
+            if (x - 1 != -1 && y + 1 != 8 && (Data.Field[y + 1, x - 1].isWhite == Data.isWhite || Data.Field[y + 1, x - 1].Type == 0)) moose.Add(new int[] { y + 1, x - 1 });
+            if (x + 1 != 8 && y - 1 != -1 && (Data.Field[y - 1, x + 1].isWhite == Data.isWhite || Data.Field[y - 1, x + 1].Type == 0)) moose.Add(new int[] { y - 1, x + 1 });
+            if (x + 1 != 8 && y + 1 != 8 && (Data.Field[y+1, x+1].isWhite==Data.isWhite || Data.Field[y+1,x+1].Type==0)) moose.Add(new int[] { y + 1, x + 1 });
             return moose;
         }
 

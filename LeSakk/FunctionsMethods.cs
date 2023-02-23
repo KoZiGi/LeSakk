@@ -15,13 +15,10 @@ namespace LeSakk
             {
                 if (GetCoords(pbx.Name)[0] == Data.selectedIndex[0] && GetCoords(pbx.Name)[1] == Data.selectedIndex[1]) ResetSelect();
                 else DoMove(pbx.Name);
-                Display.updateStatus();
             }
             else
-            {
                 SelectPiece(pbx.Name);
-                Display.updateStatus();
-            }
+            Display.updateStatus();
         }
         private static void SelectPiece(string name)
         {
@@ -47,15 +44,21 @@ namespace LeSakk
                {
                     if (Data.inCheck)
                     {
-                        if (!CheckMateStuff.CheckTempMove(y, x))
+                        Swap();
+                        if (!CzechMate(GetKing()[1], GetKing()[0], Data.Checker[1], Data.Checker[0]))
                         {
-                            Data.inCheck = false;
-                            Mierda(x, y);
-                            SwapPieces(x, y);
-                            CheckPesants();
-                            Swap();
-                            Display.UpdateDisplay(Data.GameForm.Controls);
+                            if (!CheckMateStuff.CheckTempMove(y, x))
+                            {
+                                Data.inCheck = false;
+                                Mierda(x, y);
+                                SwapPieces(x, y);
+                                CheckPesants();
+                                Swap();
+                                Display.UpdateDisplay(Data.GameForm.Controls);
+                            }
+                            else ResetSelect();
                         }
+                        else MessageBox.Show("Sakk-matt");
                     }
                     else
                     {
@@ -65,6 +68,7 @@ namespace LeSakk
                             SwapPieces(x, y);
                             CheckPesants();
                             Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
+                            if (Data.inCheck) Data.Checker = new int[] { y, x };
                             Swap();
                             Display.UpdateDisplay(Data.GameForm.Controls);
                         }
@@ -249,5 +253,43 @@ namespace LeSakk
             return false;
         }
         public static bool CzechCheck(int kingX, int kingY) => CheckRook(kingX, kingY) || CheckBishop(kingX, kingY) || CheckHonse(kingX, kingY) || CheckPesant(kingX, kingY);
+        public static bool CzechMate(int kingX, int kingY, int CheckerX, int CheckerY)
+        {
+            List<int[]> moves =  Babuk.Karoly.AllowedMoves(kingY, kingX);
+            int[] tempIndex = new int[] { Data.selectedIndex[0], Data.selectedIndex[1] };
+            Data.selectedIndex = GetKing();
+            foreach (int[] coord in moves)
+            {
+                if (CheckMateStuff.CheckTempMove(coord[0], coord[1]))
+                {
+                    return false;
+                }
+            }
+            Swap();
+            Data.selectedIndex = tempIndex;
+            if (MayBeheaded()) return false;
+            else
+            {
+                bool canSave = false;
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int g = 0; g < 8; g++)
+                    {
+                        if (Data.Field[i, g].isWhite == Data.isWhite)
+                        {
+                            Data.Field[i, g].GetValidMoves(g,i).ForEach(e =>
+                            {
+                                Data.selectedIndex = new int[] { i,g};
+                                if (CheckMateStuff.CheckTempMove(e[0], e[1])) canSave = true;
+                            });
+                        }
+                    }
+                }
+                Data.selectedIndex = tempIndex;
+                Swap();
+                return canSave;
+            }
+        }
+        public static bool MayBeheaded() => CzechCheck(Data.Checker[1], Data.Checker[0]);
     }
 }

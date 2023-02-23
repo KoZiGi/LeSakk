@@ -17,11 +17,11 @@ namespace LeSakk.Babuk
                 {
                     moose.Add(new int[] { y - 1, x });
                 }
-                if ((y-1>=0 && x-1>=0) && Data.Field[y - 1, x-1].Type!=0&& !Data.Field[y - 1, x - 1].isWhite)
+                if ((y-1>=0 && x-1>=0) && Data.Field[y - 1, x-1].Type!=0&& Data.Field[y - 1, x - 1].isWhite != Data.isWhite)
                 {
                     moose.Add(new int[] { y - 1, x-1 });
                 }
-                if ((y + 1 <= 0 && x + 1 <= 0)&& Data.Field[y - 1, x + 1].Type != 0 && !Data.Field[y - 1, x + 1].isWhite)
+                if ((y - 1 >= 0 && x + 1 <= 7)&& Data.Field[y - 1, x + 1].Type != 0 && Data.Field[y - 1, x + 1].isWhite != Data.isWhite)
                 {
                     moose.Add(new int[] { y - 1, x + 1 });
                 }
@@ -32,11 +32,11 @@ namespace LeSakk.Babuk
                 {
                     moose.Add(new int[] { y + 1, x });
                 }
-                if ((y+1<=7 && x-1>=0) && Data.Field[y + 1, x - 1].Type != 0 && Data.Field[y + 1, x - 1].isWhite)
+                if ((y+1<=7 && x-1>=0) && Data.Field[y + 1, x - 1].Type != 0 && Data.Field[y + 1, x - 1].isWhite != Data.isWhite)
                 {
                     moose.Add(new int[] { y + 1, x - 1 });
                 }
-                if ((y+1<=7 && x+1<=7) && Data.Field[y +1, x + 1].Type != 0 && Data.Field[y + 1, x + 1].isWhite)
+                if ((y+1<=7 && x+1<=7) && Data.Field[y +1, x + 1].Type != 0 && Data.Field[y + 1, x + 1].isWhite != Data.isWhite)
                 {
                     moose.Add(new int[] { y + 1, x + 1 });
                 }
