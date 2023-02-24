@@ -13,6 +13,7 @@ namespace LeSakk
         {
             if (Data.selectedIndex[0] != -1)
             {
+                if (Data.inCheck) { if (CzechMate(GetKing()[1], GetKing()[0], Data.Checker[1], Data.Checker[0])) { MessageBox.Show("bfdo"); } }
                 if (GetCoords(pbx.Name)[0] == Data.selectedIndex[0] && GetCoords(pbx.Name)[1] == Data.selectedIndex[1]) ResetSelect();
                 else DoMove(pbx.Name);
             }
@@ -38,14 +39,13 @@ namespace LeSakk
         private static void DoMove(string name)
         {
             int x = GetCoords(name)[1], y = GetCoords(name)[0];
-            if (Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].Type != 0)
+            if (!CheckMateStuff.CheckTempMove(y, x))
             {
-               if (Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].GetValidMoves(Data.selectedIndex[1], Data.selectedIndex[0]).Count>0)
-               {
-                    if (Data.inCheck)
+                if (Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].Type != 0)
+                {
+                    if (Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].GetValidMoves(Data.selectedIndex[1], Data.selectedIndex[0]).Count > 0)
                     {
-                        Swap();
-                        if (!CzechMate(GetKing()[1], GetKing()[0], Data.Checker[1], Data.Checker[0]))
+                        if (Data.inCheck)
                         {
                             if (!CheckMateStuff.CheckTempMove(y, x))
                             {
@@ -58,25 +58,24 @@ namespace LeSakk
                             }
                             else ResetSelect();
                         }
-                        else MessageBox.Show("Sakk-matt");
-                    }
-                    else
-                    {
-                        if (CheckValidMove(x, y))
+                        else
                         {
-                            Mierda(x, y);
-                            SwapPieces(x, y);
-                            CheckPesants();
-                            Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
-                            if (Data.inCheck) Data.Checker = new int[] { y, x };
-                            Swap();
-                            Display.UpdateDisplay(Data.GameForm.Controls);
+                            if (CheckValidMove(x, y))
+                            {
+                                Mierda(x, y);
+                                SwapPieces(x, y);
+                                CheckPesants();
+                                Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
+                                if (Data.inCheck) Data.Checker = new int[] { y, x };
+                                Swap();
+                                Display.UpdateDisplay(Data.GameForm.Controls);
+                            }
+                            else ResetSelect();
                         }
-                        else ResetSelect();
                     }
-               }                
+                }
             }
-            else return;
+            else ResetSelect();
         }
         private static void Mierda(int x, int y)
         {
@@ -110,7 +109,7 @@ namespace LeSakk
         {
             foreach (int[] coordinate in Data.Field[Data.selectedIndex[0], Data.selectedIndex[1]].GetValidMoves(Data.selectedIndex[1], Data.selectedIndex[0]))
             {
-                if (coordinate[1] == toY && coordinate[0] == toX) return true;
+                if (coordinate[0] == toY && coordinate[1] == toX) return true;
             }
             return false;
         }
@@ -120,7 +119,7 @@ namespace LeSakk
             {
                 case 1:
                 case 3:
-                    return CheckValidHorseOrPeasant(y, x);
+                    return CheckValidHorseOrPeasant(x, y);
                 default:
                     return CheckValidMv(x, y);
             }
@@ -130,23 +129,13 @@ namespace LeSakk
         {
             for (int i = 0; i < 8; i++)
             {
-                if (Data.Field[0, i].Type==1)
+                if (Data.Field[0, i].Type == 1 && Data.Field[0, i].isWhite)
                 {
                     AlterPiece(0, i);
                 }
-                if (Data.Field[7, i].Type == 1)
+                if (Data.Field[7, i].Type == 1 && !Data.Field[7, i].isWhite)
                 {
                     AlterPiece(7, i);
-                }
-            }
-        }
-        public static void PesantToQween()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                if (Data.Field[0,i].Type==1)
-                {
-                    AlterPiece(0,i);
                 }
             }
         }
@@ -194,12 +183,12 @@ namespace LeSakk
         {
             for (int i = kingX; i < 8; i++)
             {
-                if (Data.Field[kingY, i].Type == 2 && Data.Field[kingY, i].isWhite == Data.isWhite) return true;
+                if (Data.Field[kingY, i].Type == 2 || Data.Field[kingY, i].Type == 5 && Data.Field[kingY, i].isWhite == Data.isWhite) return true;
                 else if (Data.Field[kingY, i].Type != 0 && i != kingX) break;
             }
             for (int i = kingX; i > -1; i--)
             {
-                if (Data.Field[kingY, i].Type == 2 && Data.Field[kingY, i].isWhite == Data.isWhite) return true;
+                if (Data.Field[kingY, i].Type == 2 || Data.Field[kingY, i].Type == 5 && Data.Field[kingY, i].isWhite == Data.isWhite) return true;
                 else if (Data.Field[kingY, i].Type != 0 && i != kingX) break;
             }
             for (int i = kingY; i < 8; i++)
@@ -270,25 +259,30 @@ namespace LeSakk
             if (MayBeheaded()) return false;
             else
             {
-                bool canSave = false;
                 for (int i = 0; i < 8; i++)
                 {
                     for (int g = 0; g < 8; g++)
                     {
                         if (Data.Field[i, g].isWhite == Data.isWhite)
                         {
-                            Data.Field[i, g].GetValidMoves(g,i).ForEach(e =>
+                            Data.selectedIndex = new int[] { i, g };
+                            List<int[]> valids = Data.Field[i,g].GetValidMoves(g,i);
+                            for (int v = 0; v < valids.Count; v++)
                             {
-                                Data.selectedIndex = new int[] { i,g};
-                                if (CheckMateStuff.CheckTempMove(e[0], e[1])) canSave = true;
-                            });
+                                if (!CheckMateStuff.CheckTempMove(valids[v][0], valids[v][1])) return false;
+                            }
                         }
                     }
                 }
                 Data.selectedIndex = tempIndex;
                 Swap();
-                return canSave;
+                return true;
             }
+        }
+        public static void Surrender()
+        {
+            MessageBox.Show(Data.isWhite ? "Fehér feladta!" : "Fekete feladta!");
+            Application.Exit();
         }
         public static bool MayBeheaded() => CzechCheck(Data.Checker[1], Data.Checker[0]);
     }

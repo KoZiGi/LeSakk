@@ -116,6 +116,10 @@ namespace LeSakk.Babuk
             int dirY = Data.selectedIndex[0] < toY ? 1 : -1;
             for (int i = 0; i < 8; i++)
             {
+                if (toX<0 || toX>8 || toY<0 || toY>8)
+                {
+                    break;
+                }
                 if (toX == Data.selectedIndex[1] + dirX && toY == Data.selectedIndex[0] + dirY)
                 {
                     if (Data.Field[toY, toX].Type != 0 && Data.isWhite != Data.Field[toY, toX].isWhite) return true;

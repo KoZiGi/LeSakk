@@ -20,5 +20,15 @@ namespace LeSakk
             Display.GenDisplay(this);
             Display.UpdateDisplay(this.Controls);
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_HelpButtonClicked(object sender, CancelEventArgs e)
+        {
+            FunctionsMethods.Surrender();
+        }
     }
 }

@@ -108,12 +108,12 @@ namespace LeSakk
         {
             for (int i = kingX; i < 8; i++)
             {
-                if (babuk[kingY, i].Type == 2 && babuk[kingY, i].isWhite == Data.isWhite) return true;
+                if ((babuk[kingY, i].Type == 2 || babuk[kingY,i].Type==5) && babuk[kingY, i].isWhite == Data.isWhite) return true;
                 else if (babuk[kingY, i].Type != 0 && i != kingX) break;
             }
             for (int i = kingX; i > -1; i--)
             {
-                if (babuk[kingY, i].Type == 2 && babuk[kingY, i].isWhite == Data.isWhite) return true;
+                if ((babuk[kingY, i].Type == 2 || babuk[kingY, i].Type == 5) && babuk[kingY, i].isWhite == Data.isWhite) return true;
                 else if (babuk[kingY, i].Type != 0 && i != kingX) break;
             }
             for (int i = kingY; i < 8; i++)
@@ -147,7 +147,7 @@ namespace LeSakk
             Babu[,] babuk = new Babu[8, 8];
             for (int i = 0; i < babuk.GetLength(0); i++)
                 for (int g = 0; g < babuk.GetLength(0); g++)
-                    babuk[i, g] = Data.Field[i, g];
+                    babuk[i, g] = new Babu(Data.Field[i, g].isWhite, Data.Field[i, g].Type);
             return babuk;
         }
     }
