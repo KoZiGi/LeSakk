@@ -13,7 +13,6 @@ namespace LeSakk
         {
             if (Data.selectedIndex[0] != -1)
             {
-                if (Data.inCheck) { if (CzechMate(GetKing()[1], GetKing()[0], Data.Checker[1], Data.Checker[0])) { MessageBox.Show("bfdo"); } }
                 if (GetCoords(pbx.Name)[0] == Data.selectedIndex[0] && GetCoords(pbx.Name)[1] == Data.selectedIndex[1]) ResetSelect();
                 else DoMove(pbx.Name);
             }
@@ -66,7 +65,24 @@ namespace LeSakk
                                 SwapPieces(x, y);
                                 CheckPesants();
                                 Data.inCheck = CzechCheck(GetKing()[1], GetKing()[0]);
-                                if (Data.inCheck) Data.Checker = new int[] { y, x };
+                                if (Data.inCheck)
+                                {
+                                    Data.Checker = new int[] { y, x };
+                                    Swap();
+                                    if (CzechMate(GetKing()[1], GetKing()[0], Data.Checker[1], Data.Checker[0]))
+                                    {
+                                        DialogResult result = MessageBox.Show($"Sakkmatt! {(Data.isWhite ? "Fehér" : "Fekete")} Győzött!\nSzeretnél játszani még egy kört?", "Játék vége!", MessageBoxButtons.YesNo);
+                                        if (result==DialogResult.Yes)
+                                        {
+                                            Application.Restart();
+                                        }
+                                        else
+                                        {
+                                            Application.Exit();
+                                        }
+
+                                    }
+                                }
                                 Swap();
                                 Display.UpdateDisplay(Data.GameForm.Controls);
                             }
@@ -244,7 +260,8 @@ namespace LeSakk
         public static bool CzechCheck(int kingX, int kingY) => CheckRook(kingX, kingY) || CheckBishop(kingX, kingY) || CheckHonse(kingX, kingY) || CheckPesant(kingX, kingY);
         public static bool CzechMate(int kingX, int kingY, int CheckerX, int CheckerY)
         {
-            List<int[]> moves =  Babuk.Karoly.AllowedMoves(kingY, kingX);
+            Swap();
+            List<int[]> moves =  Babuk.Karoly.AllowedMoves(GetKing()[0], GetKing()[1]);
             int[] tempIndex = new int[] { Data.selectedIndex[0], Data.selectedIndex[1] };
             Data.selectedIndex = GetKing();
             foreach (int[] coord in moves)

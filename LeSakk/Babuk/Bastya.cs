@@ -85,6 +85,7 @@ namespace LeSakk.Babuk
             {
                 for (int i = Data.selectedIndex[0]; Data.selectedIndex[0] >= toY ? i >= toY : i <= toY; i += Data.selectedIndex[0] > toY ? -1 : 1)
                 {
+                    if (i >= 8 || i <= -1) return false;
                     if (i==Data.selectedIndex[0]) continue;
                     if (Data.Field[i, Data.selectedIndex[1]].Type!=0)
                     {
